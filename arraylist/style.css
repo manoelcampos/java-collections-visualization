@@ -7,7 +7,7 @@ body {
       background-color: #f8f8f8;
 }
 
-.arraylist {
+.list {
     display: flex;
     gap: 10px;
 }
@@ -51,7 +51,7 @@ body {
 }
 
 .button {
-  background-color: #04AA6D; 
+  background-color: #04AA6D;
   border: none;
   color: white;
   padding: 15px 32px;

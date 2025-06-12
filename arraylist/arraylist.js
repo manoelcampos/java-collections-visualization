@@ -10,7 +10,7 @@ function setupListeners() {
 }
 
 function createSlots(quant, filled = false, startIndex = 0){
-    const list = document.getElementById("arraylist");
+    const list = document.getElementById("list");
     for (let i = startIndex; i < quant+startIndex; i++) {
         const slot = document.createElement("div");
         slot.innerHTML = `<label class='index-label'>array[${i}]</label>`;
@@ -35,7 +35,7 @@ function getSlotValue(slot) {
 }
 
 function removeAndShift(clickedSlot) {
-    if (clickedSlot.classList.contains('empty')) 
+    if (clickedSlot.classList.contains('empty'))
         return;
 
     const slots = getAllSlots();
@@ -49,7 +49,7 @@ function removeAndShift(clickedSlot) {
         const current = slots[i];
         const prev = slots[i - 1];
 
-        if (current.classList.contains('empty')) 
+        if (current.classList.contains('empty'))
             continue;
 
         const delay = (i - index - 1) * 400;
@@ -89,7 +89,7 @@ function setSlotValue(slot, value) {
     }
 }
 
-// Number of elements currently filled 
+// Number of elements currently filled
 let elements = 0
 
 function addElement(){
