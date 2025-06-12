@@ -122,7 +122,8 @@ const incrementElements = () => {
 
 function getLastSlotValue() {
     const slot = getLastSlot();
-    return getSlotValue(slot);
+    // @ is the char before 'A'
+    return slot ? getSlotValue(slot) : '@';
 }
 
 function updateElements() {
