@@ -1,5 +1,5 @@
 // Length of the internal array of the Java's ArrayList.
-const capacity = 5;
+let capacity = 5;
 
 // Internal array scaling factor when the current array of the Java's ArrayList is full (elements == capacity)
 const scalingFactor = 2;
@@ -9,17 +9,20 @@ function setupListeners() {
       slots.forEach(slot => slot.addEventListener('click', () => removeAndShift(slot)));
 }
 
-function createSlots(quant){
+function createSlots(quant, filled = false, startIndex = 0){
     const list = document.getElementById("arraylist");
-    for (let i = 0; i < quant; i++) {
+    for (let i = startIndex; i < quant+startIndex; i++) {
         const slot = document.createElement("div");
-        slot.innerHTML = `<label class='index-label'>array[${i}]</label>${asciiToChar(i+65)}`;
+        slot.innerHTML = `<label class='index-label'>array[${i}]</label>`;
+        const value = filled ? asciiToChar(i+65) : '';
+        setSlotValue(slot, value);
         slot.classList.add("slot")
         list.appendChild(slot);
     }
 
-    elements = quant;
-    updateElements()
+    if(filled)
+        elements += quant;
+    updateElements();
 }
 
 function asciiToChar(asciiCode) {
@@ -29,17 +32,6 @@ function asciiToChar(asciiCode) {
 function getSlotValue(slot) {
     const node = Array.from(slot.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
     return node?.textContent.trim() || '';
-}
-
-function setSlotValue(slot, value) {
-    const indexLabel = slot.querySelector('.index-label');
-    slot.textContent = '';
-    if (value !== '') {
-        slot.textContent = value;
-    }
-    if (indexLabel) {
-        slot.appendChild(indexLabel); // Re-attach label
-    }
 }
 
 function removeAndShift(clickedSlot) {
@@ -63,9 +55,9 @@ function removeAndShift(clickedSlot) {
         const delay = (i - index - 1) * 400;
         setTimeout(() => {
             const value = getSlotValue(current);
-            emptySlot(current);
+            setSlotValue(current, '');
 
-            fillSlot(prev, value);
+            setSlotValue(prev, value);
         }, delay);
     }
 
@@ -83,15 +75,18 @@ function getSlot(i) {
     return getAllSlots()[i];
 }
 
-
-function emptySlot(slot) {
-    slot.classList.add('empty');
-    setSlotValue(slot, '');
-}
-
-function fillSlot(slot, value) {
-    slot.classList.remove('empty');
-    setSlotValue(slot, value);
+function setSlotValue(slot, value) {
+    const indexLabel = slot.querySelector('.index-label');
+    slot.textContent = '';
+    if (value === '') {
+        slot.classList.add('empty');
+    } else {
+        slot.textContent = value;
+        slot.classList.remove('empty');
+    }
+    if (indexLabel) {
+        slot.appendChild(indexLabel); // Re-attach label
+    }
 }
 
 // Number of elements currently filled 
@@ -99,15 +94,16 @@ let elements = 0
 
 function addElement(){
     if(elements === capacity){
-        window.alert("The list is full.")
-        return;
+        const newCapacity = capacity*scalingFactor;
+        createSlots(newCapacity - capacity, false, elements);
+        capacity = newCapacity;
     }
 
     const value = getLastSlotValue();
     const letter = asciiToChar(value.charCodeAt(0)+1);
     incrementElements();
 
-    fillSlot(getLastSlot(), letter);
+    setSlotValue(getLastSlot(), letter);
 }
 
 const getLastSlot = () => getSlot(elements-1);
@@ -134,7 +130,7 @@ function updateElements() {
     div.innerHTML = `<label>Elements: ${elements} Capacity: ${capacity}</label>`;
 }
 
-createSlots(capacity);
+createSlots(capacity, true);
 setupListeners();
 
 
