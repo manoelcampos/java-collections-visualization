@@ -1,3 +1,5 @@
+const capacity = 5;
+
 function setupListeners() {
       const slots = document.querySelectorAll('.slot:not(.empty)');
       slots.forEach(slot => slot.addEventListener('click', () => removeAndShift(slot)));
@@ -11,6 +13,9 @@ function createSlots(quant){
         slot.classList.add("slot")
         list.appendChild(slot);
     }
+
+    elements = quant;
+    updateElements()
 }
 
 function getSlotValue(slot) {
@@ -22,10 +27,10 @@ function setSlotValue(slot, value) {
     const indexLabel = slot.querySelector('.index-label');
     slot.textContent = '';
     if (value !== '') {
-    slot.textContent = value;
+        slot.textContent = value;
     }
     if (indexLabel) {
-    slot.appendChild(indexLabel); // Re-attach label
+        slot.appendChild(indexLabel); // Re-attach label
     }
 }
 
@@ -61,8 +66,22 @@ function removeAndShift(clickedSlot) {
     // Rebind listeners after all shifts
     const shiftCount = allSlots.length - index - 1;
     setTimeout(setupListeners, shiftCount * 400 + 100);
+    decrementElements();
 }
 
-createSlots(5);
+let elements = 0
+const decrementElements = () => {
+    --elements;
+    updateElements();
+    return elements;
+}
+
+function updateElements() {
+    const div = document.getElementById("size");
+    div.innerHTML = `<label>Elements: </label>${elements}`;
+}
+
+createSlots(capacity);
 setupListeners();
+
 
