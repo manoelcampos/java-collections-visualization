@@ -2,6 +2,7 @@ function createSlot(){
     const list = document.getElementById("list");
     const slot = document.createElement("div");
     slot.classList.add("slot")
+    //slot.style = `grid-column: ${elements};`;
     slot.addEventListener('click', () => remove(slot));
     // simulates a random memory address
     const memAddress = Math.round( Math.random()*10000).toString(16);
