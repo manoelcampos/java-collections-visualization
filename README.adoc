@@ -1,0 +1,3 @@
+= Java Collections Visualization
+
+A set of interactive web pages that visually shows how different Java Collections work under the hood. Access https://manoelcampos.github.io/java-collections-visualization to check it online.
