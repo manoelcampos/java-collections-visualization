@@ -3,59 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>ArrayList Element Removal</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 80px;
-      background-color: #f8f8f8;
-    }
-
-    .arraylist {
-      display: flex;
-      gap: 10px;
-    }
-
-    .slot {
-      width: 80px;
-      height: 80px;
-      border: 2px solid #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 5px;
-      position: relative;
-      background-color: #e0ffe0;
-      font-size: 20px;
-      transition: transform 0.4s ease;
-      cursor: pointer;
-    }
-
-    .slot .index-label {
-      position: absolute;
-      top: -22px;
-      font-size: 12px;
-      color: #555;
-      pointer-events: none;
-    }
-
-    .slot.empty {
-      background-color: #fff;
-      color: transparent;
-      cursor: default;
-    }
-
-    .info {
-      margin-bottom: 20px;
-      font-size: 16px;
-      color: #333;
-      font-weight: bold;
-      text-align: center;
-      padding-bottom: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -65,72 +13,9 @@
   </p>
   
   <div class="arraylist" id="arraylist">
-    <div class="slot"><div class="index-label">arr[0]</div>0</div>
-    <div class="slot"><div class="index-label">arr[1]</div>1</div>
-    <div class="slot"><div class="index-label">arr[2]</div>2</div>
-    <div class="slot"><div class="index-label">arr[3]</div>3</div>
-    <div class="slot"><div class="index-label">arr[4]</div>4</div>
-    <div class="slot"><div class="index-label">arr[5]</div>5</div>
+    
   </div>
 
-  <script>
-    function setupListeners() {
-      const slots = document.querySelectorAll('.slot:not(.empty)');
-      slots.forEach(slot => slot.addEventListener('click', () => removeAndShift(slot)));
-    }
-
-    function getSlotValue(slot) {
-        const node = Array.from(slot.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
-        return node?.textContent.trim() || '';
-    }
-
-    function setSlotValue(slot, value) {
-      const indexLabel = slot.querySelector('.index-label');
-      slot.textContent = '';
-      if (value !== '') {
-        slot.textContent = value;
-      }
-      if (indexLabel) {
-        slot.appendChild(indexLabel); // Re-attach label
-      }
-    }
-
-    function removeAndShift(clickedSlot) {
-      if (clickedSlot.classList.contains('empty')) 
-        return;
-
-      const allSlots = Array.from(document.querySelectorAll('.slot'));
-      const index = allSlots.indexOf(clickedSlot);
-
-      clickedSlot.classList.add('empty');
-      setSlotValue(clickedSlot, '');
-
-      // Shift values left one-by-one
-      for (let i = index + 1; i < allSlots.length; i++) {
-        const current = allSlots[i];
-        const prev = allSlots[i - 1];
-
-        if (current.classList.contains('empty')) 
-            continue;
-
-        const delay = (i - index - 1) * 400;
-        setTimeout(() => {
-          const value = getSlotValue(current);
-          current.classList.add('empty');
-          setSlotValue(current, '');
-
-          prev.classList.remove('empty');
-          setSlotValue(prev, value);
-        }, delay);
-      }
-
-      // Rebind listeners after all shifts
-      const shiftCount = allSlots.length - index - 1;
-      setTimeout(setupListeners, shiftCount * 400 + 100);
-    }
-
-    setupListeners();
-  </script>
-
+  <script src="functions.js"></script>
 </body>
 </html>
