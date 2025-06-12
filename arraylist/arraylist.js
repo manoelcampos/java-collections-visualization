@@ -41,7 +41,6 @@ function removeAndShift(clickedSlot) {
     const slots = getAllSlots();
     const index = slots.indexOf(clickedSlot);
 
-    clickedSlot.classList.add('empty');
     setSlotValue(clickedSlot, '');
 
     // Shift values left one-by-one
