@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Java ArrayList Visualization</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>A visual simulation of how a Java LinkedList works under the hood.</h1>
+  <p class="info">
+    Add an element to start. Click an element to remove it from the LinkedList<br>
+    (refresh the browser to restart)
+  </p>
+
+  <div class="list" id="list">
+  </div>
+
+  <div class="info" id="size"></div>
+  <button id="addBtn" class="button" onclick="createSlot()">Add element</button>
+
+  <script src="linkedlist.js"></script>
+</body>
+</html>
